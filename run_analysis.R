@@ -55,6 +55,13 @@ train <- cbind(trainsubj,namestrain,useful2)
 ## Now merge test and train data
 final <- rbind(test,train)
 
+## Now we fix the names of variables
+features <- features[c(variablelist),]
+## Remove the hyphen
+features$V2 <-gsub("-",".",features$V2)
+## Remove the ()
+features$V2 <-gsub("\\(\\)","",features$V2)
+
 ##Calculate the mean values per activity code and subject
 final <- aggregate(.~subject+activity_code,FUN=mean,data=final)
 
@@ -63,8 +70,11 @@ final <- merge(actnames,final,by.x="v1",by.y="activity_code")
 final$activity_code<-NULL
 final$v1<-NULL
 
+## Rename the column names to the appropriate variable name
+colnames(final) <- c("Activity","Subject",features$V2)
+
 ## Remove the temporary variables
-rm(namestest,namestrain,testsubj,trainsubj,means,stds,useful1,useful2)
+rm(namestest,namestrain,testsubj,trainsubj,means,stds,useful1,useful2,features,variablelist)
 
 ## Create the tidy data file
 write.table(final,"final.txt",row.names=FALSE)
