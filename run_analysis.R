@@ -29,7 +29,7 @@ colnames(namestrain)<-"activity_code"
 ## Read the names of activities for each code
 actnames <- read.table("activity_labels.txt")
 ## Set the column names
-colnames(actnames)<-c("V1","Activity")
+colnames(actnames)<-c("v1","Activity")
 
 ## Read the list of features corresponding to variable codes
 features<-read.table("features.txt")
@@ -40,25 +40,31 @@ means<-grep("mean\\(\\)",features[,2])
 ## Find all standard deviation variables
 stds<-grep("std\\(\\)",features[,2])
 
+## As we have 2 sets of variables, we need to sort them in ascending order
+variablelist <- sort(c(means,stds))
+
 ## This is the subset of all observations that we want to keep from TESTING set
-useful1 <-test[,c(means,stds)]
+useful1 <-test[,variablelist]
 ## This is the subset of all observations that we want to keep from TRAINING set
-useful2 <-train[,c(means,stds)]
+useful2 <-train[,variablelist]
 
 ## Make a single data frame from the variables, subject id and activity code
-test2<-cbind(testsubj,namestest,useful1)
-train2 <- cbind(trainsubj,namestrain,useful2)
+test<-cbind(testsubj,namestest,useful1)
+train <- cbind(trainsubj,namestrain,useful2)
 
 ## Now merge test and train data
-final <- rbind(test2,train2)
+final <- rbind(test,train)
+
+##Calculate the mean values per activity code and subject
+final <- aggregate(.~subject+activity_code,FUN=mean,data=final)
 
 ## Now merge the activity label in test2
-#final2 <- merge(final,actnames,by.x="activity_code",by.y="V1")
+final <- merge(actnames,final,by.x="v1",by.y="activity_code")
+final$activity_code<-NULL
+final$v1<-NULL
 
 ## Remove the temporary variables
-rm(namestest,namestrain,test2,train2,testsubj,trainsubj,means,stds,useful1,useful2)
+rm(namestest,namestrain,testsubj,trainsubj,means,stds,useful1,useful2)
 
-## Start measuring the means for each variable
-
-
-write.table(final2,"final.txt",row.names=FALSE)
+## Create the tidy data file
+write.table(final,"final.txt",row.names=FALSE)
