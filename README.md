@@ -2,13 +2,11 @@
 
 
 ### Script details
+The file name is run_analysis.R
+The script is essentially a series of commands that are run within the working directory.
+So first you unzip the data files, then you start running the script line by line WITHIN that directory
+Each line of data processing has appropriate comments within the code, so this README does not contain those details.
 
+After processing is over the temporary variables are removed
 
-
-1.  `makeCacheMatrix`: This function creates a special "matrix" object
-    that can cache its inverse.
-2.  `cacheSolve`: This function computes the inverse of the special
-    "matrix" returned by `makeCacheMatrix` above. If the inverse has
-    already been calculated (and the matrix has not changed), then the
-    `cachesolve` should retrieve the inverse from the cache.
-
+At the end of the script, the write.table function is used to create the tidy data in final.txt file
