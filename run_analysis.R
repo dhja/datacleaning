@@ -7,32 +7,32 @@
 ## 5. Creates a second, independent tidy data set with the average of each variable for each activity and each subject. 
 
 ## read the data
-test<-read.table("test/X_test.txt")
-train<-read.table("train/X_train.txt")
+test<-read.table("UCI HAR Dataset/test/X_test.txt")
+train<-read.table("UCI HAR Dataset/train/X_train.txt")
 
 ## read the subject(user) identifier
-testsubj<-read.table("test/subject_test.txt")
-trainsubj<-read.table("train/subject_train.txt")
+testsubj<-read.table("UCI HAR Dataset/test/subject_test.txt")
+trainsubj<-read.table("UCI HAR Dataset/train/subject_train.txt")
 
 ## Add the names to the columns
 colnames(testsubj)<-"subject"
 colnames(trainsubj)<-"subject"
 
 ## read the activity id performed by each subject
-namestest <- read.table("test/y_test.txt")
-namestrain <- read.table("train/y_train.txt")
+namestest <- read.table("UCI HAR Dataset/test/y_test.txt")
+namestrain <- read.table("UCI HAR Dataset/train/y_train.txt")
 
 ## Add the names to the columns
 colnames(namestest)<-"activity_code"
 colnames(namestrain)<-"activity_code"
 
 ## Read the names of activities for each code
-actnames <- read.table("activity_labels.txt")
+actnames <- read.table("UCI HAR Dataset/activity_labels.txt")
 ## Set the column names
 colnames(actnames)<-c("v1","Activity")
 
 ## Read the list of features corresponding to variable codes
-features<-read.table("features.txt")
+features<-read.table("UCI HAR Dataset/features.txt")
 
 ## Find all "mean" variables
 means<-grep("mean\\(\\)",features[,2])
@@ -74,7 +74,7 @@ final$v1<-NULL
 colnames(final) <- c("Activity","Subject",features$V2)
 
 ## Remove the temporary variables
-rm(namestest,namestrain,testsubj,trainsubj,means,stds,useful1,useful2,features,variablelist)
+rm(namestest,namestrain,testsubj,trainsubj,means,stds,useful1,useful2,features,variablelist,actnames)
 
 ## Create the tidy data file
 write.table(final,"final.txt",row.names=FALSE)
