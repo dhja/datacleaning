@@ -1,9 +1,8 @@
-## This file contains the details of code in the scripts
-## a code book describes the variables, the data, and any transformations or work that performed on the data
+### This file contains the details of code in the scripts
 
-### The variables in the tidy dataset
+### Variables in the tidy dataset
 
-Except the first two, all other variables in the tidy dataset are numeric
+Except the first two, all other variables in the tidy dataset are numeric.
 Variable 1, [Activity] is a string that can take 6 values:
 * 1 WALKING
 * 2 WALKING_UPSTAIRS
@@ -11,11 +10,12 @@ Variable 1, [Activity] is a string that can take 6 values:
 * 4 SITTING
 * 5 STANDING
 * 6 LAYING
+
 The numbers correspond to the different values in the raw data
 
 Variable 2, [Subject] is the identifier for the subjects 1 to 30 that were part of the study.
 
-From the raw data, the variables containing "mean" and "std" in the name (for average and standard deviation values) 
+From the raw data, the variables containing "mean" and "std" in the name (for average and standard deviation values)
 of the variables were copied into the intermediate data.
 From these rows in the intermediate data, the average for each of these variables was calculated, per subject, per activity.
 
@@ -99,16 +99,17 @@ Finally a Fast Fourier Transform (FFT) was applied to some of these signals prod
 These signals were used to estimate variables of the feature vector for each pattern:  
 '-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
 
-Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable:
-gravityMean
-tBodyAccMean
-tBodyAccJerkMean
-tBodyGyroMean
-tBodyGyroJerkMean
+Additional vectors obtained by averaging the signals in a signal window sample. 
+These are used on the angle() variable:
+* gravityMean
+* tBodyAccMean
+* tBodyAccJerkMean
+* tBodyGyroMean
+* tBodyGyroJerkMean
 
 The set of variables that were estimated from these signals and copied to the intermediate data are: 
-mean(): Mean value
-std(): Standard deviation
+* mean(): Mean value
+* std(): Standard deviation
 
 ### Converting raw data into tidy data
 Using software development best practices, I have written detailed comments explaining each step of the data transformation.
